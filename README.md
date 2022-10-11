@@ -1,6 +1,6 @@
 # Data Driven Control Systems
 
-Design of data-driven controller and its application
+Design and application of data-driven controllers
 
 ## Introduction
 
