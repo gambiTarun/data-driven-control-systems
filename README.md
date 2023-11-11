@@ -1,31 +1,22 @@
-# Data Driven Control Systems
-
-Design and application of data-driven controllers
+# Data-Driven Control Systems: Design and Application of Data-Driven Controllers
 
 ## Introduction
+This project focuses on the design and implementation of self-tuning PID control using recorded data for systems with strong nonlinearity. While traditional PID controllers with fixed parameters can manage systems with mild nonlinearity, those with significant nonlinear characteristics require dynamic parameter adjustment for effective control. The project explores an online data-driven control scheme and an offline data-driven fictitious reference iterative tuning (DD FRIT) control scheme, aiming to reduce computational and data requirements compared to complex control algorithms like neural networks or genetic algorithms.
 
-The real systems have nonlinearity that can be dealt to some extent using a PID control. But systems with high nonlinearly cannot be controlled by a PID controller with fixed parameters. Dynamic parameters allow for better control of systems with strong nonlinearity. In this project, a technique for self-tuning PID control is designed and implemented using recorded data of a system. However, for the controller to work on a nonlinear system the data has be recorded from a nonlinear system.
+## Online Data-Driven Control Scheme
+This approach dynamically adapts PID parameters in response to control errors. The updated parameters are stored in a database, which is concurrently optimized by removing redundant data points. This strategy significantly reduces the computational load and memory storage requirements.
 
-In the past, many complex control algorithms using the aid of neural networks or genetic algorithms have been proposed for systems with strong nonlinearity. They do come with their drawbacks including high computational cost and large data requirement.
-
-An online data-driven control scheme is designed that reduces the data requirements and thereby the computational costs. The PID parameters are adequately adapted in proportion to the control errors, and the updated parameters are stored in the database. The database is also stripped of any redundant data points in real-time to reduce the computational and memory storage requirements.
-
-Furthermore, an offline data-driven based fictious reference iterative tuning (DD FRIT) control scheme is designed and implemented. In this algorithm, a reference signal is generated from the initial closed-loop data and control parameters, and the optimal PID parameters are calculated using this signal. The major difference from the online method is that new data is not added to the database in real-time.
+## Offline DD FRIT Control Scheme
+In contrast to the online method, the DD FRIT control scheme operates offline. It generates a reference signal from initial closed-loop data and control parameters, and then calculates optimal PID parameters using this reference. This method does not add new data to the database in real time, differing significantly from the online approach.
 
 ## Experiment on Tank System
+The DD FRIT method was applied to a Tank System for level control. The system's non-metallic nature meant only cold water flow was controllable. The experiment involved tuning a local controller to linearize the cold flow input and output, followed by tuning the main controller to achieve acceptable control performance.
 
-The DD FRIT control method was used on a Tank System for level control. The tank number 2 has a nonlinear relation between its volume and the height, therefore this is a nonlinear system.
-
-The tank system being non-metallic cannot have input of hot water. Therefore, only cold flow was controlled to maintain a level specified by the reference signal. However, the system had a hysteresis which had to be removed before applying the Data Driven FRIT control scheme. For this, a local controller with the actuator was tuned to make the cold flow input and output be linear with each other.
-
-The database is updated for 5 epochs. The following hyper-parameters were set for this example.
-
-After tuning the local PID controller, the main controller was tuned to give barely acceptable results as shown in the figure 14. The input to the system G(s) for the cold flow valve is in percentage of the valve opened. For the control system, the output from the main controller and local controller are saturated from 10% to 40%. This is because the system has the best performance in that range.
-
-We can notice that the input signal u(t) is not strong enough. A stronger input signal can reduce the rise time of the output signal. This is exactly what is achieved by applying the data driven FRIT control scheme. In figure 17, the input signal can be compared to be stronger after getting the PID parameters from the DD FRIT control method.
-
-In this experiment, however, the differential gain KD is forced to be zero. This is because a differential block act as a high pass filter that allow high frequency noise to be amplified. Since the sensor for water level had a lot of noise component, it was better to remove the differential gain from the controller. Hence, KD in figure 16 is zero at all times.
-
+### Key Observations:
+- Initial tuning of the local PID controller was crucial for linearizing the system's response.
+- The main controller was adjusted to achieve satisfactory results.
+- The data-driven FRIT control scheme enhanced the system's response by providing a stronger input signal, thus reducing the rise time.
+- Differential gain (KD) was set to zero due to high-frequency noise in the water level sensor, as KD could amplify this noise.
 
 ## References
 
